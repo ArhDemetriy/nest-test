@@ -1,7 +1,12 @@
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
+interface TArticle{
+  title: string
+  content: string
+}
+
 @Entity({ name: 'articles' })
-export class Article extends BaseEntity {
+export class Article extends BaseEntity implements TArticle {
   @PrimaryGeneratedColumn()
   id: number;
 

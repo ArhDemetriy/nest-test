@@ -9,8 +9,12 @@ export class AppController {
   getMain() {
     return this.appService.getMain();
   }
-  @Get(':itemId')
+  @Get('item/:itemId')
   getById(@Param('itemId', ParseIntPipe) itemId: number = 1) {
     return this.appService.getById(itemId);
+  }
+  @Get('create')
+  addNew() {
+    return this.appService.create()
   }
 }
