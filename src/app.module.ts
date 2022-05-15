@@ -6,15 +6,19 @@ import { AppService } from './app.service';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'postgres',
-      // host: 'localhost',
-      host: 'postgresql-horizontal-62466',
-      port: 5432,
-      username: 'test',
-      password: 'test',
-      database: 'test',
+      // type: 'postgres',
+      url: process.env.DATABASE_URL,
+      // host: 'postgresql-horizontal-62466',
+      // port: 5432,
+      // username: 'test',
+      // password: 'test',
+      // database: 'test',
       logging: true,
       synchronize: true,
+      ssl: true,
+      extra: {
+        ssl: true,
+      },
     }),
   ],
   controllers: [AppController],

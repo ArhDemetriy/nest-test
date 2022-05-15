@@ -1,13 +1,17 @@
 import { Injectable } from '@nestjs/common';
+import { Article } from './article.model';
 import { articles } from './articles';
 
 @Injectable()
 export class AppService {
-  private getArticles() { return articles }
-  getMain() {
-    return { articles: this.getArticles() };
+  // private getArticles() { return articles }
+  async getMain() {
+    return {
+      articles: await Article.find(),
+      // articles: this.getArticles(),
+    };
   }
   getById(id: number) {
-    return this.getArticles().find(article => article.id === id);
+    return Article.findOne({ id });
   }
 }
