@@ -12,6 +12,7 @@ export class AppService {
     return Article.findOne({ id });
   }
   create() {
-    Article.create(new Article('new Article', 'content'))
+    const article = new Article('new Article', 'content')
+    return article.save()
   }
 }
