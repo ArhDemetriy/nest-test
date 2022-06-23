@@ -1,22 +1,45 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { UsersModule } from './users/users.module';
+
+// @Module({
+//   imports: [
+//     TypeOrmModule.forRoot({
+//       type: 'postgres',
+//       url: process.env.DATABASE_URL,
+//       logging: true,
+//       synchronize: true,
+//       ssl: {
+//         rejectUnauthorized: false,
+//       },
+//       extra: {
+//         ssl: {
+//           rejectUnauthorized: false,
+//         },
+//       },
+//     }),
+//     UsersModule,
+//   ],
+//   controllers: [AppController],
+//   providers: [AppService],
+// })
 
 @Module({
   imports: [
+    UsersModule,
+    ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
-      type: 'postgres',
       url: process.env.DATABASE_URL,
-      logging: true,
-      synchronize: true,
-      // entities: ['entities/*.*'],
-      // ssl: true,
-      extra: {
-        ssl: {
-          rejectUnauthorized: false
-        }
+      type: 'postgres',
+      ssl: {
+        rejectUnauthorized: false,
       },
+      entities: ['dist/**/*.entity{.ts,.js}'],
+      synchronize: true, // This for development
+      autoLoadEntities: true,
     }),
   ],
   controllers: [AppController],
