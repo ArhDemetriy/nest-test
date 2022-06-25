@@ -5,35 +5,16 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 
-// @Module({
-//   imports: [
-//     TypeOrmModule.forRoot({
-//       type: 'postgres',
-//       url: process.env.DATABASE_URL,
-//       logging: true,
-//       synchronize: true,
-//       ssl: {
-//         rejectUnauthorized: false,
-//       },
-//       extra: {
-//         ssl: {
-//           rejectUnauthorized: false,
-//         },
-//       },
-//     }),
-//     UsersModule,
-//   ],
-//   controllers: [AppController],
-//   providers: [AppService],
-// })
-
 @Module({
   imports: [
     UsersModule,
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
-      url: process.env.DATABASE_URL,
+      // мешает strictNullChecks
+      // почемуто берётся тип от AuroraMysqlConnectionOptions а не от PostgresConnectionOptions
+      // @ts-expect-error
       type: 'postgres',
+      url: process.env['DATABASE_URL'],
       ssl: {
         rejectUnauthorized: false,
       },
