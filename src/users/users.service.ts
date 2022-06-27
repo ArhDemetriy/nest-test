@@ -10,12 +10,16 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  getUsers(): Promise<User[]> {
+  getAllUser(): Promise<User[]> {
     return this.usersRepository.find();
   }
 
-  addUser(user): Promise<User> {
-    this.usersRepository.insert(user);
-    return user;
+  /** @throws user not found */
+  getUser(id: NonNullable<User['id']>) {
+    return this.usersRepository.findOneOrFail({ where: { id }, comment: 'find user, for client response' })
+  }
+
+  addUser(user: User) {
+    return this.usersRepository.insert(user);
   }
 }
